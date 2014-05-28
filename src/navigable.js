@@ -4,7 +4,7 @@
  */
 
 var inherits = require('inherits');
-var UserAgentUtil = require('streamhub-sdk/user-agent');
+var UserAgentUtil = require('streamhub-ui/util/user-agent');
 var View = require('view');
 
 /**
@@ -82,16 +82,16 @@ Navigable.prototype.events = (function() {
 /**
  * @type {function()}
  */
-Navigable.prototype.navTemplate = require('hgn!templates/mobile/navbar');
+Navigable.prototype.navTemplate = require('hgn!streamhub-ui/templates/mobile/navbar');
 
 /**
  * The sub template that will be used for the body of the menu template.
  * @type {function()}
  */
-Navigable.prototype.subTemplate = require('hgn!templates/navigablesub');
+Navigable.prototype.subTemplate = require('hgn!streamhub-ui/templates/navigablesub');
 
 /** @override */
-Navigable.prototype.template = require('hgn!templates/navigable');
+Navigable.prototype.template = require('hgn!streamhub-ui/templates/navigable');
 
 /**
  * Handle the back button click. This should trigger a navigate event.

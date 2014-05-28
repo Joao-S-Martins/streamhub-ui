@@ -16,46 +16,19 @@ require.config({
     debug: 'lib/debug/debug'
   },
   packages: [{
-    name: "streamhub-sdk",
+    name: "auth",
+    location: "lib/auth/src",
+    main: "auth"
+  },{
+    name: "livefyre-bootstrap",
+    location: "lib/livefyre-bootstrap/src"
+  },{
+    name: "streamhub-ui",
     location: "src"
-  },{
-    name: "streamhub-sdk/auth",
-    location: "src/auth"
-  },{
-    name: "streamhub-sdk/collection",
-    location: "src/collection"
-  },{
-    name: "streamhub-sdk/content",
-    location: "src/content"
-  },{
-    name: "streamhub-sdk/modal",
-    location: "src/modal"
-  },{
-    name: "streamhub-sdk/ui",
-    location: "src/ui"
-  },{
-    name: "streamhub-sdk/jquery",
-    location: "src",
-    main: "jquery"
-  },{
-    name: "streamhub-sdk-tests",
-    location: "tests"
-  },{
-    name: "stream",
-    location: "lib/stream/src"
   },{
     name: "view",
     location: "lib/view/src",
     main: "view"
-  },{
-    name: "auth",
-    location: "lib/auth/src"
-  },{
-    name: "livefyre-auth",
-    location: "lib/livefyre-auth/src"
-  },{
-    name: "livefyre-auth-tests",
-    location: "lib/livefyre-auth/test"
   }],
   shim: {
     jquery: {

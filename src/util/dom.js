@@ -2,7 +2,7 @@
  * @fileoverview Dom helpers that are generally unsupported or too specific for jQuery
  */
 
-var UserAgentUtil = require('streamhub-sdk/user-agent');
+var UserAgentUtil = require('streamhub-ui/util/user-agent');
 
 /** @type {Object} */
 var dom = {};

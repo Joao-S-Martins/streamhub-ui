@@ -1,7 +1,7 @@
 'use strict';
 
-var ButtonTemplate = require('hgn!streamhub-sdk/ui/templates/button');
-var Command = require('streamhub-sdk/ui/command');
+var ButtonTemplate = require('hgn!streamhub-ui/templates/button');
+var Command = require('streamhub-ui/command');
 var inherits = require('inherits');
 var View = require('view');
 

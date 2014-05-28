@@ -6,9 +6,9 @@
 var $ = require('jquery');
 var inherits = require('inherits');
 var nullFunction = function () {};
-var UserAgentUtil = require('streamhub-sdk/user-agent');
+var UserAgentUtil = require('streamhub-ui/util/user-agent');
 var View = require('view');
-var lfWrapperTemplate = require('hgn!templates/lfwrapper');
+var lfWrapperTemplate = require('hgn!streamhub-ui/templates/lfwrapper');
 
 /** @enum {string} */
 var VIS_EVENT = {
@@ -96,7 +96,7 @@ Container.prototype.render = function() {
 };
 
 /** @override */
-Container.prototype.template = require('hgn!templates/container');
+Container.prototype.template = require('hgn!streamhub-ui/templates/container');
 
 /**
  * Handle the mousedown event. Don't want it to bubble all the way to the body

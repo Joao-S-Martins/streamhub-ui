@@ -4,11 +4,11 @@
  */
 
 var $ = require('jquery');
-var BaseMenu = require('streamhub-sdk/ui/menu/base');
+var BaseMenu = require('streamhub-ui/menu/base');
 var inherits = require('inherits');
 var loader = require('livefyre-bootstrap/loader');
-var loaderTemplate = require('hgn!templates/loader');
-var shareTemplate = require('hgn!templates/menu/share');
+var loaderTemplate = require('hgn!streamhub-ui/templates/loader');
+var shareTemplate = require('hgn!streamhub-ui/templates/menu/share');
 
 /**
  * Flag menu.

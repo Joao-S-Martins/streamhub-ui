@@ -1,0 +1,14 @@
+/.awspublish*
+.DS_store
+/coverage
+/dist
+codekit-config.json
+.project
+/lib/
+node_modules/
+streamhub-sdk.built*
+streamhub-sdk.min*
+*.log
+/docs/api
+/tmp
+

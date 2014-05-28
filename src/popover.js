@@ -4,8 +4,8 @@
  */
 
 var $ = require('jquery');
-var Container = require('streamhub-sdk/ui/container');
-var domUtil = require('streamhub-sdk/ui/util/dom');
+var Container = require('streamhub-ui/container');
+var domUtil = require('streamhub-ui/util/dom');
 var inherits = require('inherits');
 
 /**
@@ -61,7 +61,7 @@ Popover.POSITION_FN_MAP = {
 Popover.prototype.elClass = Popover.CLASSES.BASE;
 
 /** @override */
-Popover.prototype.template = require('hgn!templates/popover');
+Popover.prototype.template = require('hgn!streamhub-ui/templates/popover');
 
 /**
  * Get the bottom position of the element where this popover should be positioned.

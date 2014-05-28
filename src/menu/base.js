@@ -4,9 +4,9 @@
 
 var $ = require('jquery');
 var inherits = require('inherits');
-var linkTemplate = require('hgn!templates/menu/link');
-var Navigable = require('streamhub-sdk/ui/navigable');
-var UserAgentUtil = require('streamhub-sdk/user-agent');
+var linkTemplate = require('hgn!streamhub-ui/templates/menu/link');
+var Navigable = require('streamhub-ui/navigable');
+var UserAgentUtil = require('streamhub-ui/util/user-agent');
 
 /**
  * Base menu.

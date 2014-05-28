@@ -2,7 +2,7 @@
  * @fileOverview User agent functions.
  */
 
-var util = require('streamhub-sdk/util');
+var memoize = require('streamhub-ui/util/functions').memoize;
 
 /** @type {Object} */
 var userAgent = {};
@@ -11,7 +11,7 @@ var userAgent = {};
  * Get the browser version.
  * @return {string|number}
  */
-userAgent.getIEVersion = util.memoize(function () {
+userAgent.getIEVersion = memoize(function () {
     if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
         return parseInt(RegExp.$1, 10);
     }
@@ -22,7 +22,7 @@ userAgent.getIEVersion = util.memoize(function () {
  * Is the current browser IE?
  * @return {boolean} yay or nay.
  */
-userAgent.isIE = util.memoize(function () {
+userAgent.isIE = memoize(function () {
     return /MSIE ([0-9]+)\./.test(navigator.userAgent);
 });
 
@@ -30,7 +30,7 @@ userAgent.isIE = util.memoize(function () {
  * Is the current browser mobile?
  * @return {boolean} yay or nay.
  */
-userAgent.isMobile = util.memoize(function () {
+userAgent.isMobile = memoize(function () {
     var mobile = navigator.appVersion.indexOf('Mobile') !== -1;
     var android = navigator.appVersion.indexOf('Android') !== -1;
     return mobile || android;

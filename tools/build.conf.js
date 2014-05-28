@@ -2,23 +2,15 @@
   mainConfigFile: '../requirejs.conf.js',
   paths: {
     jquery: 'lib/jquery/jquery.min',
-    almond: 'lib/almond/almond',
-    auth: 'tools/auth-stub'
+    almond: 'lib/almond/almond'
   },
   baseUrl: '..',
-  name: "streamhub-sdk",
+  name: "streamhub-ui",
   include: [
-    'almond',
-    'streamhub-sdk/collection',
-    'streamhub-sdk/content',
-    'streamhub-sdk/content/views/content-list-view',
-    'streamhub-sdk/views/list-view',
-    'streamhub-sdk/auth',
-    'streamhub-sdk/modal',
-    'streamhub-sdk/views/streams/injector'
+    'almond'
   ],
   stubModules: ['text', 'hgn', 'json'],
-  out: "../dist/streamhub-sdk.min.js",
+  out: "../dist/streamhub-ui.min.js",
   pragmasOnSave: {
     excludeHogan: true
   },
