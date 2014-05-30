@@ -75,6 +75,10 @@ Button.prototype.getTemplateContext = function () {
     return context;
 };
 
+Button.prototype.render = function () {
+    View.prototype.render.call(this);
+};
+
 /**
  * Execute the button's command
  * @protected

@@ -2,11 +2,11 @@
   "name": "streamhub-sdk",
   "description": "Livefyre Streamhub SDK",
   "author": "Livefyre <support@livefyre.com>",
-  "contributors": {
-    "name": "Benjamin Goering",
-    "email": "ben@livefyre.com"
-  },
-  "version": "2.9.2",
+  "contributors": [
+    "Benjamin Goering <ben@livefyre.com>",
+    "Joao Martins <joao@livefyre.com> (http://www.joao.io)"
+  ],
+  "version": "0.1.0",
   "dependencies": {
     "bower": "*",
     "http-server": "*",
@@ -27,7 +27,7 @@
     "test-jenkins": "npm test",
     "karma": "./node_modules/karma/bin/karma start tools/karma.conf.js",
     "build-version": "node tools/build_version.js",
-    "lessc": "./node_modules/less/bin/lessc -ru --compress src/css/style.{less,css} && ./node_modules/less/bin/lessc -ru --compress src/content/css/content.{less,css} && ./node_modules/less/bin/lessc -ru --compress src/views/css/list-view.{less,css}",
+    "lessc": "./node_modules/less/bin/lessc -ru --compress src/css/ui.{less,css}",
     "jsdoc": "rm -rf docs/api && ./node_modules/jsdoc/jsdoc README.md -c tools/jsdoc.conf.json",
     "send-to-coveralls": "find coverage -name 'lcov.info' -print0 | xargs -0 cat | ./node_modules/coveralls/bin/coveralls.js"
   },
