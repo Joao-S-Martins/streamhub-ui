@@ -74,10 +74,10 @@ Popover.prototype._getBottomPosition = function (elem) {
     var boundingRect = domUtil.getBoundingClientRect(elem);
     var top = boundingRect.bottom + domUtil.getScrollY() + 10;
     var availableWidth = boundingRect.right - boundingRect.left;
-    var width = (availableWidth < this.opts.maxWidth || Number.POSITIVE_INFINITY) ? availableWidth : this.opts.maxWidth;
+    var width = this.opts.maxWidth || availableWidth;
     var left = (availableWidth - width) / 2;
     left += boundingRect.left + domUtil.getScrollX();
-    return {top: top, left: left, width: width};
+    return {top: top, left: (left < 0) ? 0 : left, width: width};
 };
 
 /**
