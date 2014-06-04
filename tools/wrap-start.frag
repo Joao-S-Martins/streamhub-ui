@@ -1,7 +1,11 @@
 (function (root) {
     if ((typeof Livefyre === 'object') && (typeof Livefyre.define === 'function') && Livefyre.define.amd) {
-        // Livefyre.define is defined by https://github.com/Livefyre/require
-        Livefyre.define([], factory);
+        if (Livefyre.require.almond) {
+            Livefyre.define('streamhub-ui', [], factory);
+        } else {
+            // Livefyre.define is defined by https://github.com/Livefyre/require
+            Livefyre.define([], factory);
+        }
 
     } else if (typeof define === 'function' && define.amd) {
         //Allow using this built library as an AMD module

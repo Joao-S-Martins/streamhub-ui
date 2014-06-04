@@ -1,5 +1,7 @@
 /.awspublish*
-.DS_store
+.DS_tore
+.DS_Store?
+*/.DS_Store?
 /coverage
 /dist
 codekit-config.json

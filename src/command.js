@@ -77,4 +77,11 @@ Command.prototype.canExecute = function () {
     return this._canExecute;
 };
 
+/**
+ * Prepares this command for trash collection.
+ */
+Command.prototype.destroy = function () {
+    this._listeners = null;//EventEmitter
+};
+
 module.exports = Command;

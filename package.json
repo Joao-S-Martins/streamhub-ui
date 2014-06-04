@@ -1,6 +1,6 @@
 {
-  "name": "streamhub-sdk",
-  "description": "Livefyre Streamhub SDK",
+  "name": "streamhub-ui",
+  "description": "Livefyre Streamhub UI",
   "author": "Livefyre <support@livefyre.com>",
   "contributors": [
     "Benjamin Goering <ben@livefyre.com>",

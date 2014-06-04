@@ -84,11 +84,4 @@ AuthRequiredCommand.prototype.canExecute = function () {
     return Command.prototype.canExecute.apply(this, arguments) && this._authCmd.canExecute();
 };
 
-/**
- * Prepares this command for trash collection.
- */
-AuthRequiredCommand.prototype.destroy = function () {
-    this._listeners = null;//EventEmitter
-};
-
 module.exports = AuthRequiredCommand;

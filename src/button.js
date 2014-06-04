@@ -6,7 +6,13 @@ var inherits = require('inherits');
 var View = require('view');
 
 /**
- * A View that, when clicked, executes a Command
+ * A View that, when clicked, executes a Command.
+ * @param command {!Command} The command to execute
+ * @param [opts] {?Object=}
+ * @param [opts.elClassPrefix] {?string=}
+ * @param [opts.className] {?string=}
+ * @param [opts.label] {?string=}
+ * @param [opts.errback] {?function=} Node-style callback
  */
 function Button (command, opts) {
     opts = opts || {};
@@ -63,6 +69,16 @@ Button.prototype.template = ButtonTemplate;
  */
 Button.prototype.disabledClass = 'disabled';
 
+/** Disable the button */
+Button.prototype.disable = function () {
+    this._setEnabled(false);
+};
+
+/** Enable the button */
+Button.prototype.enable = function () {
+    this._setEnabled(true);
+};
+
 Button.prototype.updateLabel = function (label) {
     this._label = label;
     this.render();
@@ -84,8 +100,7 @@ Button.prototype.render = function () {
  * @protected
  */
 Button.prototype._execute = function () {
-    // TODO: Don't execute if not enabled
-    this._command.execute(this._errback);
+    !this._disabled && this._command.execute(this._errback);
 };
 
 /**
