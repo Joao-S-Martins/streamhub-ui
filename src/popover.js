@@ -217,6 +217,13 @@ Popover.prototype.resizeAndReposition = function (elem) {
         this.$el.css('left', position.left - boundingClientRect.left+'px');
     }
 
+    // Position popover arrow
+    var arrowEl = this.$el.find('.'+Popover.CLASSES.ARROW);
+    var popoverParentEl = $(this._parentEl)
+    var translateX = arrowEl.offset().left - popoverParentEl.offset().left - (popoverParentEl.outerWidth()/2) ;
+    var arrowLeft = parseInt(arrowEl.css('left'), 10);
+    arrowEl.css('left', (arrowLeft-translateX)+'px');
+
     //this._scrollIntoPosition(position.top);
 };
 
