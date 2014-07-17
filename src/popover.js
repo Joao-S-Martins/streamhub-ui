@@ -36,6 +36,7 @@ inherits(Popover, Container);
 /** @enum {string} */
 Popover.CLASSES = {
     BASE: 'lf-popover',
+    ARROW: 'lf-popover-arrow',
     CONTENT: 'lf-popover-content',
     POSITION_PREFIX: 'lf-pos-',
     LF: 'lf'
@@ -72,7 +73,13 @@ Popover.prototype.template = require('hgn!streamhub-ui/templates/popover');
 Popover.prototype._getBottomPosition = function (elem) {
     this._activePosition = Popover.POSITIONS.BOTTOM;
     var boundingRect = domUtil.getBoundingClientRect(elem);
-    var top = boundingRect.bottom + domUtil.getScrollY() + 10;
+
+    var top = $(elem).height();
+    if (this.parentEl === document.body) {
+       top = boundingRect.bottom + domUtil.getScrollY();
+    }
+    top += 10;
+
     var availableWidth = boundingRect.right - boundingRect.left;
     var width = this.opts.maxWidth || availableWidth;
     var left = (availableWidth - width) / 2;
@@ -178,6 +185,7 @@ Popover.prototype.render = function () {
 
 /** @override */
 Popover.prototype.resizeAndReposition = function (elem) {
+    // Position popover
     var position = this[Popover.POSITION_FN_MAP[this._position]].call(this, elem);
     var POSITION_PREFIX = Popover.CLASSES.POSITION_PREFIX;
     position.width = this._getPopoverWidth(position.width);
@@ -190,6 +198,7 @@ Popover.prototype.resizeAndReposition = function (elem) {
         }
         return classes.join(' ');
     }).addClass(POSITION_PREFIX + this._activePosition);
+
     this._scrollIntoPosition(position.top);
 };
 

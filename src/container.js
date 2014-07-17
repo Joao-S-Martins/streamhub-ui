@@ -64,7 +64,8 @@ function Container(opts) {
 
     this.render();
     var appendee = this.el.parentNode || this.el;
-    (this.opts.parentEl || document.body).appendChild(appendee);
+    this._parentEl = opts.parentEl || document.body;
+    this._parentEl.appendChild(appendee);
 }
 inherits(Container, View);
 
