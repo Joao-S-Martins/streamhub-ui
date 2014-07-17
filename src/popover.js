@@ -36,6 +36,7 @@ inherits(Popover, Container);
 /** @enum {string} */
 Popover.CLASSES = {
     BASE: 'lf-popover',
+    ARROW: 'lf-popover-arrow',
     CONTENT: 'lf-popover-content',
     POSITION_PREFIX: 'lf-pos-',
     LF: 'lf'
@@ -72,12 +73,31 @@ Popover.prototype.template = require('hgn!streamhub-ui/templates/popover');
 Popover.prototype._getBottomPosition = function (elem) {
     this._activePosition = Popover.POSITIONS.BOTTOM;
     var boundingRect = domUtil.getBoundingClientRect(elem);
-    var top = boundingRect.bottom + domUtil.getScrollY() + 10;
-    var availableWidth = boundingRect.right - boundingRect.left;
-    var width = this.opts.maxWidth || availableWidth;
-    var left = (availableWidth - width) / 2;
-    left += boundingRect.left + domUtil.getScrollX();
-    return {top: top, left: (left < 0) ? 0 : left, width: width};
+
+    var top;
+    if (this.parentEl === document.body) {
+        top = boundingRect.bottom + domUtil.getScrollY();
+    } else {
+        top = $(elem).height();
+    }
+    top += 10;
+
+    var left;
+    if (this.parentEl === document.body) {
+        var availableWidth = boundingRect.right - boundingRect.left;
+        var width = this.opts.maxWidth || availableWidth;
+        left = (availableWidth - width) / 2;
+        left += boundingRect.left + domUtil.getScrollX();
+        left = Math.max(0, left);
+    } else {
+        left = -1 * $(elem).outerWidth() / 2;
+    }
+
+    return {
+        top: top,
+        left: left,
+        width: width
+    };
 };
 
 /**
@@ -178,6 +198,7 @@ Popover.prototype.render = function () {
 
 /** @override */
 Popover.prototype.resizeAndReposition = function (elem) {
+    // Position popover
     var position = this[Popover.POSITION_FN_MAP[this._position]].call(this, elem);
     var POSITION_PREFIX = Popover.CLASSES.POSITION_PREFIX;
     position.width = this._getPopoverWidth(position.width);
@@ -190,7 +211,20 @@ Popover.prototype.resizeAndReposition = function (elem) {
         }
         return classes.join(' ');
     }).addClass(POSITION_PREFIX + this._activePosition);
-    this._scrollIntoPosition(position.top);
+
+    var boundingClientRect = this.el.getBoundingClientRect();
+    if (boundingClientRect.left < 0) {
+        this.$el.css('left', position.left - boundingClientRect.left+'px');
+    }
+
+    // Position popover arrow
+    var arrowEl = this.$el.find('.'+Popover.CLASSES.ARROW);
+    var popoverParentEl = $(this._parentEl)
+    var translateX = arrowEl.offset().left - popoverParentEl.offset().left - (popoverParentEl.outerWidth()/2) ;
+    var arrowLeft = parseInt(arrowEl.css('left'), 10);
+    arrowEl.css('left', (arrowLeft-translateX)+'px');
+
+    //this._scrollIntoPosition(position.top);
 };
 
 /**
