@@ -74,17 +74,30 @@ Popover.prototype._getBottomPosition = function (elem) {
     this._activePosition = Popover.POSITIONS.BOTTOM;
     var boundingRect = domUtil.getBoundingClientRect(elem);
 
-    var top = $(elem).height();
+    var top;
     if (this.parentEl === document.body) {
-       top = boundingRect.bottom + domUtil.getScrollY();
+        top = boundingRect.bottom + domUtil.getScrollY();
+    } else {
+        top = $(elem).height();
     }
     top += 10;
 
-    var availableWidth = boundingRect.right - boundingRect.left;
-    var width = this.opts.maxWidth || availableWidth;
-    var left = (availableWidth - width) / 2;
-    left += boundingRect.left + domUtil.getScrollX();
-    return {top: top, left: (left < 0) ? 0 : left, width: width};
+    var left;
+    if (this.parentEl === document.body) {
+        var availableWidth = boundingRect.right - boundingRect.left;
+        var width = this.opts.maxWidth || availableWidth;
+        left = (availableWidth - width) / 2;
+        left += boundingRect.left + domUtil.getScrollX();
+        left = Math.max(0, left);
+    } else {
+        left = -1 * $(elem).outerWidth() / 2;
+    }
+
+    return {
+        top: top,
+        left: left,
+        width: width
+    };
 };
 
 /**
@@ -199,7 +212,12 @@ Popover.prototype.resizeAndReposition = function (elem) {
         return classes.join(' ');
     }).addClass(POSITION_PREFIX + this._activePosition);
 
-    this._scrollIntoPosition(position.top);
+    var boundingClientRect = this.el.getBoundingClientRect();
+    if (boundingClientRect.left < 0) {
+        this.$el.css('left', position.left - boundingClientRect.left+'px');
+    }
+
+    //this._scrollIntoPosition(position.top);
 };
 
 /**
