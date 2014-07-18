@@ -3,6 +3,7 @@ require.config({
     jquery: 'lib/jquery/jquery',
     hogan: 'lib/hogan/web/builds/2.0.0/hogan-2.0.0.amd',
     hgn: 'lib/requirejs-hogan-plugin/hgn',
+    text: 'lib/requirejs-text/text',
     jasmine: 'lib/jasmine/lib/jasmine-core/jasmine',
     'jasmine-html': 'lib/jasmine/lib/jasmine-core/jasmine-html',
     'jasmine-jquery': 'lib/jasmine-jquery/lib/jasmine-jquery',
