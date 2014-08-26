@@ -78,19 +78,19 @@ Popover.prototype._getBottomPosition = function (elem) {
     if (this.parentEl === document.body) {
         top = boundingRect.bottom + domUtil.getScrollY();
     } else {
-        top = $(elem).height();
+        top = boundingRect.height;
     }
     top += 10;
 
     var left;
+    var availableWidth = boundingRect.right - boundingRect.left;
+    var width = this.opts.maxWidth || availableWidth;
     if (this.parentEl === document.body) {
-        var availableWidth = boundingRect.right - boundingRect.left;
-        var width = this.opts.maxWidth || availableWidth;
         left = (availableWidth - width) / 2;
         left += boundingRect.left + domUtil.getScrollX();
         left = Math.max(0, left);
     } else {
-        left = -1 * $(elem).outerWidth() / 2;
+        left = $(elem).offset().left + (-1 * $(elem).outerWidth() / 2);
     }
 
     return {

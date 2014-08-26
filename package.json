@@ -6,7 +6,7 @@
     "Benjamin Goering <ben@livefyre.com>",
     "Joao Martins <joao@livefyre.com> (http://www.joao.io)"
   ],
-  "version": "0.1.2",
+  "version": "0.1.3",
   "dependencies": {
     "bower": "*",
     "http-server": "*",
