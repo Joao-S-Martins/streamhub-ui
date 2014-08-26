@@ -75,7 +75,7 @@ Popover.prototype._getBottomPosition = function (elem) {
     var boundingRect = domUtil.getBoundingClientRect(elem);
 
     var top;
-    if (this.parentEl === document.body) {
+    if (this._parentEl === document.body) {
         top = boundingRect.bottom + domUtil.getScrollY();
     } else {
         top = boundingRect.height;
@@ -85,12 +85,18 @@ Popover.prototype._getBottomPosition = function (elem) {
     var left;
     var availableWidth = boundingRect.right - boundingRect.left;
     var width = this.opts.maxWidth || availableWidth;
-    if (this.parentEl === document.body) {
+    if (this._parentEl === document.body) {
         left = (availableWidth - width) / 2;
         left += boundingRect.left + domUtil.getScrollX();
         left = Math.max(0, left);
     } else {
-        left = $(elem).offset().left + (-1 * $(elem).outerWidth() / 2);
+        var parentPosition = $(this._parentEl).css('position');
+        var halfWidthOffset = (-1 * $(elem).outerWidth() / 2);
+        if (parentPosition === 'relative') {
+            left = halfWidthOffset; 
+        } else {
+            left = $(elem).offset().left + halfWidthOffset;
+        }
     }
 
     return {
