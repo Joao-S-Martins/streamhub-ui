@@ -28,6 +28,16 @@ function Popover(opts) {
     /** @override */
     this._hideTimeMS = 300;
 
+    /**
+     * Whether the client is mobile or not.
+     * Requires the instantiator to tell this class whether it's mobile or not
+     * so that we don't force mobile popovers onto other modules/apps that
+     * can't support it.
+     * @type {boolean}
+     * @private
+     */
+    this._isMobile = !!opts.isMobile;
+
     /** @override */
     this._showTimeMS = 300;
 }
@@ -35,11 +45,12 @@ inherits(Popover, Container);
 
 /** @enum {string} */
 Popover.CLASSES = {
-    BASE: 'lf-popover',
     ARROW: 'lf-popover-arrow',
+    BASE: 'lf-popover',
     CONTENT: 'lf-popover-content',
-    POSITION_PREFIX: 'lf-pos-',
-    LF: 'lf'
+    LF: 'lf',
+    MOBILE: 'lf-popover-mobile',
+    POSITION_PREFIX: 'lf-pos-'
 };
 
 /** @enum {string} */
@@ -204,6 +215,13 @@ Popover.prototype.render = function () {
 
 /** @override */
 Popover.prototype.resizeAndReposition = function (elem) {
+    // Mobile popovers should not do any repositioning, since they will be the
+    // full screen.
+    if (this._isMobile) {
+        this.$el.addClass(Popover.CLASSES.MOBILE);
+        return;
+    }
+
     // Position popover
     var position = this[Popover.POSITION_FN_MAP[this._position]].call(this, elem);
     var POSITION_PREFIX = Popover.CLASSES.POSITION_PREFIX;
@@ -229,8 +247,6 @@ Popover.prototype.resizeAndReposition = function (elem) {
     var translateX = arrowEl.offset().left - popoverParentEl.offset().left - (popoverParentEl.outerWidth()/2) ;
     var arrowLeft = parseInt(arrowEl.css('left'), 10);
     arrowEl.css('left', (arrowLeft-translateX)+'px');
-
-    //this._scrollIntoPosition(position.top);
 };
 
 /**
