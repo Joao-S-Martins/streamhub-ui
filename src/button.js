@@ -28,6 +28,7 @@ function Button (command, opts) {
     this._disabled = false;
     this._label = opts.label || '';
     this._errback = opts.errback;
+    this._insightsVerb = opts.insightsVerb || opts.label || '';
 
     View.call(this, opts);
 
@@ -84,6 +85,10 @@ Button.prototype.updateLabel = function (label) {
     this.render();
 };
 
+Button.prototype.updateInsightsVerb = function (verb) {
+    this._insightsVerb = verb;
+};
+
 Button.prototype.getTemplateContext = function () {
     var context = {};
     context.buttonLabel = this._label;
@@ -99,8 +104,11 @@ Button.prototype.render = function () {
  * Execute the button's command
  * @protected
  */
-Button.prototype._execute = function () {
-    !this._disabled && this._command.execute(this._errback);
+Button.prototype._execute = function (evt) {
+    if (!this._disabled) {
+        this._command.execute(this._errback);
+        $(evt.target).trigger('insights:local', {type: this._insightsVerb});
+    }
 };
 
 /**
