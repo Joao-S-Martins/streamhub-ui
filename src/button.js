@@ -1,5 +1,6 @@
 'use strict';
 
+var $ = require('jquery');
 var ButtonTemplate = require('hgn!streamhub-ui/templates/button');
 var Command = require('streamhub-ui/command');
 var inherits = require('inherits');
