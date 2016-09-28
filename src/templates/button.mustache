@@ -1,5 +1,5 @@
 {{#buttonUrl}}
-    <a href="{{{ buttonUrl }}}" target="_blank">{{{ buttonLabel }}}</a>
+    <a href="{{{ buttonUrl }}}" target="_blank" {{#ariaLabel}}aria-label="{{ ariaLabel }}" role="button"{{/ariaLabel}}>{{{ buttonLabel }}}</a>
 {{/buttonUrl}}
 {{^buttonUrl}}
     {{{ buttonLabel }}}

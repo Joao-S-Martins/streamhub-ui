@@ -99,6 +99,9 @@ Button.prototype.getTemplateContext = function () {
 
 Button.prototype.render = function () {
     View.prototype.render.call(this);
+    if (this.ariaLabel && !this.opts.buttonUrl) {
+        this.el.setAttribute('aria-label', this.ariaLabel);
+    }
 };
 
 /**
