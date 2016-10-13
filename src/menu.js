@@ -41,6 +41,9 @@ BaseMenu.prototype.events = (function() {
     var events = {};
     var event = UserAgentUtil.isMobile() ? 'tap' : 'click';
     events[event + ' .' + BaseMenu.CLASSES.BODY + ' > li'] = 'handleOptionClick';
+    if (!UserAgentUtil.isMobile()) {
+        events['keyup .' + BaseMenu.CLASSES.BODY + ' > li'] = 'handleOptionClick';
+    }
     return events;
 })();
 $.extend(BaseMenu.prototype.events, Navigable.prototype.events);
@@ -90,6 +93,9 @@ BaseMenu.prototype.getLinkConfig = function() {
  */
 BaseMenu.prototype.handleOptionClick = function(ev) {
     ev.stopPropagation();
+    if (ev.which !== 13 && ev.which !== 32 && ev.type === 'keyup') {
+        return;
+    }
     this.$el.trigger(this.postEvent, this.buildEventData(ev));
 };
 
