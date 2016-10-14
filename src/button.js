@@ -58,7 +58,8 @@ function distributeClassPrefix(prefix, classAttr) {
 
 // DOM Event Listeners
 Button.prototype.events = View.prototype.events.extended({
-    click: '_execute'
+    click: '_execute',
+    keyup: '_execute'
 });
 
 Button.prototype.elClassPrefix = 'lf';

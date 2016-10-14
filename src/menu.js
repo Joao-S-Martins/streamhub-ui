@@ -39,8 +39,13 @@ BaseMenu.CLASSES = Navigable.CLASSES;
 /** @override */
 BaseMenu.prototype.events = (function() {
     var events = {};
-    var event = UserAgentUtil.isMobile() ? 'tap' : 'click';
-    events[event + ' .' + BaseMenu.CLASSES.BODY + ' > li'] = 'handleOptionClick';
+    var isMobile = UserAgentUtil.isMobile();
+    var menuBodyClass = BaseMenu.CLASSES.BODY;
+    var event = isMobile ? 'tap' : 'click';
+    events[event + ' .' + menuBodyClass + ' > li'] = 'handleOptionClick';
+    if (!isMobile) {
+        events['keyup .' + menuBodyClass + ' > li'] = 'handleOptionClick';
+    }
     return events;
 })();
 $.extend(BaseMenu.prototype.events, Navigable.prototype.events);
@@ -90,6 +95,9 @@ BaseMenu.prototype.getLinkConfig = function() {
  */
 BaseMenu.prototype.handleOptionClick = function(ev) {
     ev.stopPropagation();
+    if (ev.which !== 13 && ev.which !== 32 && ev.type === 'keyup') {
+        return;
+    }
     this.$el.trigger(this.postEvent, this.buildEventData(ev));
 };
 
