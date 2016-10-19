@@ -110,6 +110,9 @@ Button.prototype.render = function () {
  * @protected
  */
 Button.prototype._execute = function (evt) {
+    if (evt.type === "keyup" && 13 !== evt.which && 32 !== evt.which) {
+        return;
+    }
     if (!this._disabled) {
         this._command.execute(this._errback);
         $(evt.target).trigger('insights:local', {type: this._insightsVerb});
