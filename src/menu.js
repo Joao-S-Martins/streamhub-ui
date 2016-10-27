@@ -95,6 +95,10 @@ BaseMenu.prototype.getLinkConfig = function() {
  */
 BaseMenu.prototype.handleOptionClick = function(ev) {
     ev.stopPropagation();
+    // prevent space from scrolling the page
+    if (ev.type === "keyup" && ev.which === 32) {
+        ev.preventDefault();
+    }
     if (ev.which !== 13 && ev.which !== 32 && ev.type === 'keyup') {
         return;
     }
