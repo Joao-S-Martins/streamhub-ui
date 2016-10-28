@@ -3,6 +3,7 @@
  */
 
 var $ = require('jquery');
+var AriaUtil = require('streamhub-ui/util/aria');
 var inherits = require('inherits');
 var linkTemplate = require('hgn!streamhub-ui/templates/menu');
 var Navigable = require('streamhub-ui/navigable');
@@ -95,11 +96,7 @@ BaseMenu.prototype.getLinkConfig = function() {
  */
 BaseMenu.prototype.handleOptionClick = function(ev) {
     ev.stopPropagation();
-    // prevent space from scrolling the page
-    if (ev.type === "keyup" && ev.which === 32) {
-        ev.preventDefault();
-    }
-    if (ev.which !== 13 && ev.which !== 32 && ev.type === 'keyup') {
+    if (AriaUtil.isNotAriaKeyEvent(ev)) {
         return;
     }
     this.$el.trigger(this.postEvent, this.buildEventData(ev));
