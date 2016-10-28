@@ -3,7 +3,7 @@
 /**
  * If it is a key event, check to see if it is a space or enter
  */
-exports.isNotAriaKeyEvent = function (event) {
+exports.isNonAriaKeyEvent = function (event) {
     if (event.type === "keyup") {
         // key event is not space or enter
         if (event.which !== 13 && event.which !== 32) {

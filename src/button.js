@@ -111,7 +111,7 @@ Button.prototype.render = function () {
  * @protected
  */
 Button.prototype._execute = function (evt) {
-    if (AriaUtil.isNotAriaKeyEvent(evt)) {
+    if (AriaUtil.isNonAriaKeyEvent(evt)) {
         return;
     }
     if (!this._disabled) {

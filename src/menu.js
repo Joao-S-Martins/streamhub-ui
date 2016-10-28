@@ -96,7 +96,7 @@ BaseMenu.prototype.getLinkConfig = function() {
  */
 BaseMenu.prototype.handleOptionClick = function(ev) {
     ev.stopPropagation();
-    if (AriaUtil.isNotAriaKeyEvent(ev)) {
+    if (AriaUtil.isNonAriaKeyEvent(ev)) {
         return;
     }
     this.$el.trigger(this.postEvent, this.buildEventData(ev));
