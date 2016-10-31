@@ -1,6 +1,7 @@
 'use strict';
 
 var $ = require('jquery');
+var AriaUtil = require('streamhub-ui/util/aria');
 var ButtonTemplate = require('hgn!streamhub-ui/templates/button');
 var Command = require('streamhub-ui/command');
 var inherits = require('inherits');
@@ -110,7 +111,7 @@ Button.prototype.render = function () {
  * @protected
  */
 Button.prototype._execute = function (evt) {
-    if (evt.type === "keyup" && 13 !== evt.which && 32 !== evt.which) {
+    if (AriaUtil.isNonAriaKeyEvent(evt)) {
         return;
     }
     if (!this._disabled) {
