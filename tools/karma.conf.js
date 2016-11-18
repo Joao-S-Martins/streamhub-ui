@@ -77,7 +77,7 @@ module.exports = function(config) {
 
     junitReporter: {
       outputFile: 'tests.log',
-      suite: 'streamhub-sdk'
+      suite: 'streamhub-ui'
     },
 
     // If browser does not capture in given timeout [ms], kill it
