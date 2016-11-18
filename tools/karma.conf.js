@@ -16,15 +16,11 @@ module.exports = function(config) {
     files: [
       'requirejs.conf.js',
       // shim for function.bind, needed for phantomjs
-      {pattern: 'tests/lib/function.bind.js', included: true},
-      {pattern: 'tests/lib/spec-list.js', included: false},
       {pattern: 'src/**/*.js', included: false},
       {pattern: 'src/**/*.mustache', included: false},
       {pattern: 'tests/spec/**/*.js', included: false},
-      {pattern: 'tests/mocks/**/*.js', included: false},
       {pattern: 'lib/**/*.js', included: false},
       {pattern: 'lib/**/*.json', included: false},
-      {pattern: 'tests/**/*.json', included: false},
       'tests/tests-main.js',
     ],
 
