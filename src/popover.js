@@ -58,9 +58,7 @@ Popover.POSITIONS = {
     SMART: 'smart',
     BOTTOM: 'bottom',
     LEFT: 'left',
-    RIGHT: 'right',
-    TOP: 'top',
-    SMART_TOP: 'smart_top',
+    RIGHT: 'right'
 };
 
 /** @enum {function()} */
@@ -68,9 +66,7 @@ Popover.POSITION_FN_MAP = {
     'bottom': '_getBottomPosition',
     'left': '_getLeftPosition',
     'right': '_getRightPosition',
-    'smart': '_getSmartPosition',
-    'top': '_getTopPosition',
-    'smart_top': '_getSmartTopPosition',
+    'smart': '_getSmartPosition'
 };
 
 /** @override */
@@ -100,7 +96,6 @@ Popover.prototype._getBottomPosition = function (elem) {
     var left;
     var availableWidth = boundingRect.right - boundingRect.left;
     var width = this.opts.maxWidth || availableWidth;
-
     if (this._parentEl === document.body) {
         left = (availableWidth - width) / 2;
         left += boundingRect.left + domUtil.getScrollX();
@@ -161,26 +156,8 @@ Popover.prototype._getRightPosition = function (elem) {
     var boundingRect = domUtil.getBoundingClientRect(elem);
     var top = boundingRect.top + domUtil.getScrollY();
     var left = boundingRect.right + domUtil.getScrollX() + 10;
-    
     var width = document.body.clientWidth - left;
     return {top: top, left: left, width: width};
-};
-
-/**
- * Position the popover on top of an element.
- * @param {Element} elem The element to position next to.
- * @return {Object} The bottom, left, width positioning for the popover.
- * @private
- */
-Popover.prototype._getTopPosition = function (elem) {
-    this._activePosition = Popover.POSITIONS.TOP;
-    var boundingRect = domUtil.getBoundingClientRect(elem);
-
-    bottom = $(window).height() - (boundingRect.top + domUtil.getScrollY()) + 10;
-    var boundingRect = domUtil.getBoundingClientRect(elem.parentElement);
-    left = boundingRect.left + domUtil.getScrollX() - 5;
-    width = document.body.clientWidth - left;
-    return {bottom: bottom, left: left, width: width};
 };
 
 /**
@@ -195,50 +172,6 @@ Popover.prototype._getSmartPosition = function (elem) {
         return this._getBottomPosition(elem);
     }
     return position;
-};
-
-/**
- * Automatically pick the best position for the popover.
- * @param {Element} elem The element to position next to.
- * @return {Object} Top and left positioning for the popover.
- * @private
- */
-Popover.prototype._getSmartTopPosition = function (elem) {
-    this._activePosition = Popover.POSITIONS.SMART_TOP;
-    var top;
-    var left;
-    var width;
-
-    //Position Top
-    var boundingRect = domUtil.getBoundingClientRect(elem.parentElement);
-    if (boundingRect.top > boundingRect.height) {
-        return this._getTopPosition(elem);
-    }
-
-    //Position Right
-    var boundingRect = domUtil.getBoundingClientRect(elem.parentElement);
-    if (($(window).width() - boundingRect.left) > (boundingRect.width + 10)) {
-        this._activePosition = Popover.POSITIONS.RIGHT;
-        var boundingRect = domUtil.getBoundingClientRect(elem);
-
-        var offset = $(elem).css('marginTop').replace(/[^-\d\.]/g, '');
-        var top = boundingRect.top + domUtil.getScrollY() - offset;
-        var left = boundingRect.right + domUtil.getScrollX() + 10;
-    
-        var width = document.body.clientWidth - left;
-        return {top: top, left: left, width: width};
-    }
-
-    //Bosition Bottom
-    else {
-        var boundingRect = domUtil.getBoundingClientRect(elem);
-        top = boundingRect.bottom + domUtil.getScrollY() + 10;
-        var boundingRect = domUtil.getBoundingClientRect(elem.parentElement);
-        left = boundingRect.left + domUtil.getScrollX() - 5;
-
-        width = document.body.clientWidth - left;
-        return {top: top, left: left, width: width};
-    } 
 };
 
 /**
@@ -280,24 +213,6 @@ Popover.prototype.render = function () {
     this.$_contentNode = this.$('.' + Popover.CLASSES.CONTENT);
 };
 
-/* Position the arrow */
-Popover.prototype.positionArrowSmart = function (elem) {
-
-    var arrowEl = this.$el.find('.'+ Popover.CLASSES.ARROW);
-
-    var offset = parseInt($(elem).outerWidth(true))/2;
-    var left = $(elem.parentElement).width() - offset;
-    arrowEl.css('left', left+'px');
-
-    var position = this._activePosition;
-    if(position == 'right') {
-        arrowEl.css('left', '-5px');
-        var offset = parseInt($(elem).outerHeight(true)) - (parseInt($(elem).innerHeight()));
-        arrowEl.css('top', offset+'px');
-    }
-};
-
-
 /** @override */
 Popover.prototype.resizeAndReposition = function (elem) {
     // Mobile popovers should not do any repositioning, since they will be the
@@ -310,7 +225,6 @@ Popover.prototype.resizeAndReposition = function (elem) {
     // Position popover
     var position = this[Popover.POSITION_FN_MAP[this._position]].call(this, elem);
     var POSITION_PREFIX = Popover.CLASSES.POSITION_PREFIX;
-
     position.width = this._getPopoverWidth(position.width);
     this.$el.css(position).removeClass(function () {
         var classes = [];
