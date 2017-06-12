@@ -146,7 +146,7 @@ Popover.prototype._getLeftPosition = function (elem) {
 Popover.prototype._getPopoverWidth = function (width) {
     if (width < this.opts.minWidth) return this.opts.minWidth;
     if (width > this.opts.maxWidth) return this.opts.maxWidth;
-    width -= this.opts.sidePadding * (this._activePosition === Popover.POSITIONS.BOTTOM ? 2 : 1);
+    width -= (this.opts.sidePadding || 0) * (this._activePosition === Popover.POSITIONS.BOTTOM ? 2 : 1);
     return width;
 };
 
