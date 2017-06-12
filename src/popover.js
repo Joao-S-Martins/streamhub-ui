@@ -53,6 +53,17 @@ Popover.CLASSES = {
     POSITION_PREFIX: 'lf-pos-'
 };
 
+/**
+ * Clear all absolutely positions for an element.
+ * @type {Object}
+ */
+Popover.CLEAR_CSS_POSITIONS = {
+    bottom: '',
+    left: '',
+    right: '',
+    top: ''
+};
+
 /** @enum {string} */
 Popover.POSITIONS = {
     SMART: 'smart',
@@ -297,7 +308,6 @@ Popover.prototype.positionArrowSmart = function (elem) {
     }
 };
 
-
 /** @override */
 Popover.prototype.resizeAndReposition = function (elem) {
     // Mobile popovers should not do any repositioning, since they will be the
@@ -312,7 +322,7 @@ Popover.prototype.resizeAndReposition = function (elem) {
     var POSITION_PREFIX = Popover.CLASSES.POSITION_PREFIX;
 
     position.width = this._getPopoverWidth(position.width);
-    this.$el.css(position).removeClass(function () {
+    this.$el.css(Popover.CLEAR_CSS_POSITIONS).css(position).removeClass(function () {
         var classes = [];
         for (var pos in Popover.POSITIONS) {
             if (Popover.POSITIONS.hasOwnProperty(pos)) {
@@ -332,7 +342,7 @@ Popover.prototype.resizeAndReposition = function (elem) {
     var popoverParentEl = $(this._parentEl)
     var translateX = arrowEl.offset().left - popoverParentEl.offset().left - (popoverParentEl.outerWidth()/2) ;
     var arrowLeft = parseInt(arrowEl.css('left'), 10);
-    arrowEl.css('left', (arrowLeft-translateX)+'px');
+    arrowEl.css(Popover.CLEAR_CSS_POSITIONS).css('left', (arrowLeft-translateX) + 'px');
 };
 
 /**
