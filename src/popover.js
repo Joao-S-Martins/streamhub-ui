@@ -71,7 +71,7 @@ Popover.POSITIONS = {
     LEFT: 'left',
     RIGHT: 'right',
     TOP: 'top',
-    SMART_TOP: 'smart_top',
+    SMART_TOP: 'smart_top'
 };
 
 /** @enum {function()} */
@@ -81,7 +81,7 @@ Popover.POSITION_FN_MAP = {
     'right': '_getRightPosition',
     'smart': '_getSmartPosition',
     'top': '_getTopPosition',
-    'smart_top': '_getSmartTopPosition',
+    'smart_top': '_getSmartTopPosition'
 };
 
 /** @override */
@@ -172,7 +172,6 @@ Popover.prototype._getRightPosition = function (elem) {
     var boundingRect = domUtil.getBoundingClientRect(elem);
     var top = boundingRect.top + domUtil.getScrollY();
     var left = boundingRect.right + domUtil.getScrollX() + 10;
-    
     var width = document.body.clientWidth - left;
     return {top: top, left: left, width: width};
 };
@@ -187,10 +186,10 @@ Popover.prototype._getTopPosition = function (elem) {
     this._activePosition = Popover.POSITIONS.TOP;
     var boundingRect = domUtil.getBoundingClientRect(elem);
 
-    bottom = $(window).height() - (boundingRect.top + domUtil.getScrollY()) + 10;
+    var bottom = $(window).height() - (boundingRect.top + domUtil.getScrollY()) + 10;
     var boundingRect = domUtil.getBoundingClientRect(elem.parentElement);
-    left = boundingRect.left + domUtil.getScrollX() - 5;
-    width = document.body.clientWidth - left;
+    var left = boundingRect.left + domUtil.getScrollX() - 5;
+    var width = document.body.clientWidth - left;
     return {bottom: bottom, left: left, width: width};
 };
 
@@ -219,32 +218,32 @@ Popover.prototype._getSmartTopPosition = function (elem) {
     var top;
     var left;
     var width;
+    var boundingRect;
 
     //Position Top
-    var boundingRect = domUtil.getBoundingClientRect(elem.parentElement);
+    boundingRect = domUtil.getBoundingClientRect(elem.parentElement);
     if (boundingRect.top > boundingRect.height) {
         return this._getTopPosition(elem);
     }
-
+    
     //Position Right
-    var boundingRect = domUtil.getBoundingClientRect(elem.parentElement);
     if (($(window).width() - boundingRect.left) > (boundingRect.width + 10)) {
         this._activePosition = Popover.POSITIONS.RIGHT;
-        var boundingRect = domUtil.getBoundingClientRect(elem);
+        boundingRect = domUtil.getBoundingClientRect(elem);
 
         var offset = $(elem).css('marginTop').replace(/[^-\d\.]/g, '');
-        var top = boundingRect.top + domUtil.getScrollY() - offset;
-        var left = boundingRect.right + domUtil.getScrollX() + 10;
+        top = boundingRect.top + domUtil.getScrollY() - offset;
+        left = boundingRect.right + domUtil.getScrollX() + 10;
     
-        var width = document.body.clientWidth - left;
+        width = document.body.clientWidth - left;
         return {top: top, left: left, width: width};
     }
 
     //Bosition Bottom
     else {
-        var boundingRect = domUtil.getBoundingClientRect(elem);
+        boundingRect = domUtil.getBoundingClientRect(elem);
         top = boundingRect.bottom + domUtil.getScrollY() + 10;
-        var boundingRect = domUtil.getBoundingClientRect(elem.parentElement);
+        boundingRect = domUtil.getBoundingClientRect(elem.parentElement);
         left = boundingRect.left + domUtil.getScrollX() - 5;
 
         width = document.body.clientWidth - left;
@@ -291,19 +290,20 @@ Popover.prototype.render = function () {
     this.$_contentNode = this.$('.' + Popover.CLASSES.CONTENT);
 };
 
-/* Position the arrow */
+/**
+ * Positions the arrow of a product popover.
+ * @param  {Element} The element that the arrow is positioned in relation to.
+ * 
+ */
 Popover.prototype.positionArrowSmart = function (elem) {
-
     var arrowEl = this.$el.find('.'+ Popover.CLASSES.ARROW);
-
     var offset = parseInt($(elem).outerWidth(true))/2;
     var left = $(elem.parentElement).width() - offset;
     arrowEl.css('left', left+'px');
-
     var position = this._activePosition;
-    if(position == 'right') {
+    if (position === 'right') {
         arrowEl.css('left', '-5px');
-        var offset = parseInt($(elem).outerHeight(true)) - (parseInt($(elem).innerHeight()));
+        offset = parseInt($(elem).outerHeight(true)) - (parseInt($(elem).innerHeight()));
         arrowEl.css('top', offset+'px');
     }
 };
