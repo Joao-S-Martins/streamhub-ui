@@ -227,15 +227,14 @@ Popover.prototype._getSmartTopPosition = function (elem) {
     }
     
     //Position Right
-    if (($(window).width() - boundingRect.left) > (boundingRect.width + 10)) {
+    if (($(window).width() - boundingRect.left - boundingRect.width) > (boundingRect.width + 10)) {
         this._activePosition = Popover.POSITIONS.RIGHT;
         boundingRect = domUtil.getBoundingClientRect(elem);
 
         var offset = $(elem).css('marginTop').replace(/[^-\d\.]/g, '');
         top = boundingRect.top + domUtil.getScrollY() - offset;
         left = boundingRect.right + domUtil.getScrollX() + 10;
-    
-        width = document.body.clientWidth - left;
+        width = domUtil.getBoundingClientRect(elem.parentElement).width + 10;
         return {top: top, left: left, width: width};
     }
 
@@ -308,6 +307,12 @@ Popover.prototype.positionArrowSmart = function (elem) {
     }
 };
 
+Popover.prototype.setProductPopoverWidth = function (elem) {
+    var position = this[Popover.POSITION_FN_MAP[this._position]].call(this, elem);
+    var POSITION_PREFIX = Popover.CLASSES.POSITION_PREFIX;
+    position.width = domUtil.getBoundingClientRect(elem.parentElement).width;
+    this.$el.css('width', position.width+10+'px');
+};
 /** @override */
 Popover.prototype.resizeAndReposition = function (elem) {
     // Mobile popovers should not do any repositioning, since they will be the
@@ -320,7 +325,6 @@ Popover.prototype.resizeAndReposition = function (elem) {
     // Position popover
     var position = this[Popover.POSITION_FN_MAP[this._position]].call(this, elem);
     var POSITION_PREFIX = Popover.CLASSES.POSITION_PREFIX;
-
     position.width = this._getPopoverWidth(position.width);
     this.$el.css(Popover.CLEAR_CSS_POSITIONS).css(position).removeClass(function () {
         var classes = [];
