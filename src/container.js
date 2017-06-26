@@ -8,7 +8,6 @@ var inherits = require('inherits');
 var nullFunction = function () {};
 var UserAgentUtil = require('streamhub-ui/util/user-agent');
 var View = require('view');
-var lfWrapperTemplate = require('hgn!streamhub-ui/templates/lfwrapper');
 
 /** @enum {string} */
 var VIS_EVENT = {
@@ -65,7 +64,8 @@ function Container(opts) {
 
     this.render();
     var appendee = this.el.parentNode || this.el;
-    (this.opts.parentEl || document.body).appendChild(appendee);
+    this._parentEl = opts.parentEl || document.body;
+    this._parentEl.appendChild(appendee);
 }
 inherits(Container, View);
 
@@ -88,12 +88,6 @@ Container.prototype.events = (function () {
     }
     return events;
 })();
-
-/** @override */
-Container.prototype.render = function() {
-    View.prototype.render.call(this);
-    this.$el.wrap(lfWrapperTemplate());
-};
 
 /** @override */
 Container.prototype.template = require('hgn!streamhub-ui/templates/container');

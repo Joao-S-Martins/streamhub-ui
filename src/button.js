@@ -1,5 +1,7 @@
 'use strict';
 
+var $ = require('jquery');
+var AriaUtil = require('streamhub-ui/util/aria');
 var ButtonTemplate = require('hgn!streamhub-ui/templates/button');
 var Command = require('streamhub-ui/command');
 var inherits = require('inherits');
@@ -28,6 +30,7 @@ function Button (command, opts) {
     this._disabled = false;
     this._label = opts.label || '';
     this._errback = opts.errback;
+    this._insightsVerb = opts.insightsVerb || opts.label || '';
 
     View.call(this, opts);
 
@@ -56,7 +59,8 @@ function distributeClassPrefix(prefix, classAttr) {
 
 // DOM Event Listeners
 Button.prototype.events = View.prototype.events.extended({
-    click: '_execute'
+    click: '_execute',
+    keyup: '_execute'
 });
 
 Button.prototype.elClassPrefix = 'lf';
@@ -84,6 +88,10 @@ Button.prototype.updateLabel = function (label) {
     this.render();
 };
 
+Button.prototype.updateInsightsVerb = function (verb) {
+    this._insightsVerb = verb;
+};
+
 Button.prototype.getTemplateContext = function () {
     var context = {};
     context.buttonLabel = this._label;
@@ -93,14 +101,23 @@ Button.prototype.getTemplateContext = function () {
 
 Button.prototype.render = function () {
     View.prototype.render.call(this);
+    if (this.ariaLabel && !this.opts.buttonUrl) {
+        this.el.setAttribute('aria-label', this.ariaLabel);
+    }
 };
 
 /**
  * Execute the button's command
  * @protected
  */
-Button.prototype._execute = function () {
-    !this._disabled && this._command.execute(this._errback);
+Button.prototype._execute = function (evt) {
+    if (AriaUtil.isNonAriaKeyEvent(evt)) {
+        return;
+    }
+    if (!this._disabled) {
+        this._command.execute(this._errback);
+        $(evt.target).trigger('insights:local', {type: this._insightsVerb});
+    }
 };
 
 /**
