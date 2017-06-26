@@ -307,12 +307,18 @@ Popover.prototype.positionArrowSmart = function (elem) {
     }
 };
 
+/**
+ * Resets the width of the popover, so that it updates every time the popover is hovered over.
+ * @param  {Element} The element the popover is positioned in relation to.
+ * 
+ */
 Popover.prototype.setProductPopoverWidth = function (elem) {
     var position = this[Popover.POSITION_FN_MAP[this._position]].call(this, elem);
     var POSITION_PREFIX = Popover.CLASSES.POSITION_PREFIX;
     position.width = domUtil.getBoundingClientRect(elem.parentElement).width;
-    this.$el.css('width', position.width+10+'px');
+    this.$el.css('width', position.width + 10 + 'px');
 };
+
 /** @override */
 Popover.prototype.resizeAndReposition = function (elem) {
     // Mobile popovers should not do any repositioning, since they will be the
